@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: cobranca
+      POSTGRES_USER: cobranca
+      POSTGRES_PASSWORD: cobranca
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build: .
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql+psycopg2://cobranca:cobranca@db:5432/cobranca
+      JWT_SECRET_KEY: "super-secret"
+    ports:
+      - "8000:8000"
+
+volumes:
+  postgres_data:
