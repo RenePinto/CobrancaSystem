@@ -35,11 +35,11 @@ Se você usa o Render diretamente (sem Docker), configure o serviço com:
 - **Build Command:** `pip install --upgrade pip setuptools wheel && pip install -r requirements.txt`
 - **Start Command:** `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
 - **Python version:** `3.11.9` (definido via `runtime.txt`)
+- **DATABASE_URL:** defina a string de conexão do Postgres no painel do Render (ex.: `postgresql+psycopg2://user:pass@host:5432/db`). Sem isso, a aplicação tenta usar `db` como host (padrão do Docker Compose) e falha com `could not translate host name "db"`.
 
 Essas configurações garantem que o Render instale wheels pré-compilados do `pandas` e evite o erro `metadata-generation-failed`.
 
-> **Importante:** remova qualquer linha `pythonVersion` de um `render.yaml` antigo. Esse campo não é aceito pelo schema atual do Render Blueprint e causa o erro `"field 
-not found in type file.Service"`.
+> **Importante:** remova qualquer linha `pythonVersion` de um `render.yaml` antigo. Esse campo não é aceito pelo schema atual do Render Blueprint e causa o erro `"field pythonVersion not found in type file.Service"`.
 
 ## Configuração inicial
 Crie um usuário admin usando o endpoint `/users` (exige token). Para o primeiro acesso, você pode inserir manualmente um admin no banco ou usar o shell dentro do container para criar um usuário via script. O fluxo recomendado é:
