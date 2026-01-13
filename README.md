@@ -29,6 +29,15 @@ docker compose up --build
 ```
 A API ficará disponível em `http://localhost:8000`.
 
+## Deploy no Render
+Se você usa o Render diretamente (sem Docker), configure o serviço com:
+
+- **Build Command:** `pip install --upgrade pip setuptools wheel && pip install -r requirements.txt`
+- **Start Command:** `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+- **Python version:** `3.11.9` (definido via `runtime.txt`)
+
+Essas configurações garantem que o Render instale wheels pré-compilados do `pandas` e evite o erro `metadata-generation-failed`.
+
 ## Configuração inicial
 Crie um usuário admin usando o endpoint `/users` (exige token). Para o primeiro acesso, você pode inserir manualmente um admin no banco ou usar o shell dentro do container para criar um usuário via script. O fluxo recomendado é:
 1. Iniciar o container.
